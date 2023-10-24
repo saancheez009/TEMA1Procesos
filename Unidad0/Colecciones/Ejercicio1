@@ -1,0 +1,6 @@
+import random
+
+lista_enteros = [random.randint(1, 100) for _ in range(10)]
+
+print(lista_enteros)
+

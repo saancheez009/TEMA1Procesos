@@ -1,0 +1,23 @@
+[
+    {
+        "area": 1572,
+        "population": 8982000,
+        "id": 1,
+        "countryId": 4,
+        "name": "London"
+    },
+    {
+        "area": 115,
+        "population": 553230,
+        "id": 2,
+        "countryId": 4,
+        "name": "Manchester"
+    },
+    {
+        "area": 268,
+        "population": 1149000,
+        "id": 3,
+        "countryId": 4,
+        "name": "Birmingham"
+    }
+]

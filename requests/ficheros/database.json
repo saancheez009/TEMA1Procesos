@@ -1,0 +1,7 @@
+[
+  
+    {"id":1, "name": "Bolivia", "capital":"La Paz", "Area":51320},
+    {"id":2, "name": "Colombia", "capital":"Bogotá", "Area":56897},
+    {"id":3, "name": "Venezuela", "capital":"Caracas", "Area":42563},
+    {"id":14, "name": "España", "capital":"Madrid", "Area":19766}
+]
