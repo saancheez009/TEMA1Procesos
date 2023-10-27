@@ -1,0 +1,26 @@
+[
+    {
+        "id": 1,
+        "dni": "0925648J",
+        "nombre": "Maricela",
+        "apellidos": "Santos Pérez",
+        "telefono": 694528836,
+        "especialidad": "deporte"
+    },
+    {
+        "id": 2,
+        "dni": "08936417Y",
+        "nombre": "Carlos",
+        "apellidos": "Fernández Gutiérrez",
+        "telefono": 264890043,
+        "especialidad": "Guerra"
+    },
+    {
+        "id": 3,
+        "dni": "05289465L",
+        "nombre": "Verónica",
+        "apellidos": "Martínez Rueda",
+        "telefono": 693231569,
+        "especialidad": "investigación"
+    }
+]
