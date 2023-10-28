@@ -1,0 +1,27 @@
+[
+    {
+        "id": 1,
+        "titulo": "Barcelona gana la copa del rey",
+        "cuerpo": "El equipo de Xavi dominó durante todo el partido a su rival, el atlético de madrid",
+        "fecha": "27/10/2023",
+        "idPeriodista": 1
+        
+        
+
+    },
+    {
+        "id": 2,
+        "titulo": "Israel inicia su ofensiva en Gaza",
+        "cuerpo": "El ejército hebreo ha realizado su primera incursión con tanques y blindados esta madrugada",
+        "fecha": "26/10/2023",
+        "idPeriodista": 2
+        
+    },
+    {
+        "id": 3,
+        "titulo": "Descubren corrupción del jefe de la policía local de México DF",
+        "cuerpo": "El oficial es acusado de coecho, tráfico de influencias y extorsión",
+        "fecha": "20/10/2023",
+        "idPeriodista": 3
+    }
+]

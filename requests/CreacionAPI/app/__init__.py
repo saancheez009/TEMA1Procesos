@@ -1,10 +1,10 @@
 
-from flask import app
+from flask import Flask
 
 from.periodistas.routes import periodistaBP
 from.articulos.routes import articuloBP
 
-app = app(__name__)
+app = Flask(__name__)
 
 # Registramos los blueprints: primero se indica el nombre
 # del Blueprint, en url_prefix indicamos el prefijo de la URL
