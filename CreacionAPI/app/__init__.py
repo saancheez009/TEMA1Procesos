@@ -1,15 +1,16 @@
 
-from flask import app
+from flask import *
 
-from.periodistas.routes import periodistaBP
-from.articulos.routes import articuloBP
+from.periodistas.routes import periodistasBP
+from.articulos.routes import articulosBP
 
-app = app(__name__)
+app = Flask(__name__) 
 
+app.config['JSON_AS_ASCII']= False
 # Registramos los blueprints: primero se indica el nombre
 # del Blueprint, en url_prefix indicamos el prefijo de la URL
-app.register_blueprint(periodistaBP, url_prefix='/periodistas')
-app.register_blueprint(articuloBP, url_prefix='/articulos')
+app.register_blueprint(periodistasBP, url_prefix='/periodistas')
+app.register_blueprint(articulosBP, url_prefix='/articulos')
 
 
 

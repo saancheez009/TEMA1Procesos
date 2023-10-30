@@ -1,8 +1,8 @@
-from utils.functions import *
+from app.funciones.functions import *
 
 from flask import Blueprint, jsonify, request
 
-rutaFichero = "proyecto/ficheros/articulos.json"
+rutaFichero = "ficheros/articulos.json"
 articulosBP = Blueprint('articulos', __name__)
 
 def find_next_id():

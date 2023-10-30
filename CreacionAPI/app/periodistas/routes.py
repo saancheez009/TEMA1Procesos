@@ -1,10 +1,10 @@
 
-from utils.functions import *
+from app.funciones.functions import *
 
 from flask import Blueprint, jsonify, request
 
-ficheroPeriodistas = "../proyecto/ficheros/periodistas.json"
-ficheroAtriculos = "../proyecto/ficheros/articulos.json"
+ficheroPeriodistas = "ficheros/periodistas.json"
+ficheroArticulos = "ficheros/articulos.json"
 
 periodistasBP = Blueprint('periodistas', __name__)
 
@@ -23,7 +23,7 @@ def get_periodistas():
     return jsonify(periodistas)
 
 @periodistasBP.get("/<int:id>")
-def get_country(id):
+def get_periodista(id):
     periodistas = leeFichero(ficheroPeriodistas)
     for periodista in periodistas:
         if periodista['id'] == id:
@@ -33,7 +33,7 @@ def get_country(id):
 
 @periodistasBP.post("/")
 
-def add_country():
+def add_periodista():
     periodistas = leeFichero(ficheroPeriodistas)
 
     if request.is_json:
@@ -84,12 +84,12 @@ def delete_periodista(id):
 
     return {"error": "Periodista no encontrado"}, 404
 
-@periodistasBP.get("/<int:id>/articulo")
-def get_periodistas(id):
+@periodistasBP.get("/<int:id>/articulos")
+def get_articulos(id):
     list = []
-    articulos = leeFichero(ficheroPeriodistas)
+    articulos = leeFichero(ficheroArticulos)
     for articulo in articulos:
-        if articulo['articuloId'] == id:
+        if articulo['articulosId'] == id:
             list.append(articulo)
     if len(list) > 0:
         return list, 200
