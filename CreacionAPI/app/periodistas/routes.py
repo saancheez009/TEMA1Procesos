@@ -3,6 +3,8 @@ from app.funciones.functions import *
 
 from flask import Blueprint, jsonify, request
 
+
+
 ficheroPeriodistas = "ficheros/periodistas.json"
 ficheroArticulos = "ficheros/articulos.json"
 
