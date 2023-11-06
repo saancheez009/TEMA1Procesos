@@ -3,7 +3,7 @@ from flask import *
 
 from.periodistas.routes import periodistasBP
 from.articulos.routes import articulosBP
-from .usuarios.routes import usersBP
+from .users.routes import usersBP
 
 from flask import Flask
 from flask_jwt_extended import JWTManager

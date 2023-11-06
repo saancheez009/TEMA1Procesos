@@ -1,5 +1,5 @@
 
-from app.funciones.functions import *
+from app.functions import *
 
 from flask import Blueprint, jsonify, request
 
