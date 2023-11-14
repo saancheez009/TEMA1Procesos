@@ -5,6 +5,8 @@ from flask import Blueprint, jsonify, request
 rutaFichero = "ficheros/articulos.json"
 articulosBP = Blueprint('articulos', __name__)
 
+
+
 def find_next_id():
     articulos = leeFichero(rutaFichero)
     max = articulos[0]["id"]
