@@ -1,0 +1,46 @@
+import multiprocessing
+import time
+
+def leer_numeros(nombre_archivo, conexion_tuberia):
+    with open(nombre_archivo, 'r') as archivo:
+        for linea in archivo:
+            numero = int(linea.strip())
+            conexion_tuberia.send(numero)
+
+    # Enviar None para indicar que no hay más números
+    conexion_tuberia.send(None)
+    conexion_tuberia.close()
+
+def suma_desde_tuberia(conexion_tuberia):
+    suma_total = 0
+    while True:
+        numero = conexion_tuberia.recv()
+        if numero is None:
+            break
+        suma_total += numero
+    print(f"La suma total es: {suma_total}")
+
+def main():
+    nombre_archivo = 'EjericiosT2/numeros.txt'  
+    conexion_tuberia_padre, conexion_tuberia_hijo = multiprocessing.Pipe()
+
+    # Crear procesos
+    proceso_lectura = multiprocessing.Process(target=leer_numeros, args=(nombre_archivo, conexion_tuberia_hijo))
+    proceso_suma = multiprocessing.Process(target=suma_desde_tuberia, args=(conexion_tuberia_padre,))
+
+    # Iniciar procesos
+    proceso_lectura.start()
+    proceso_suma.start()
+
+    # Esperar a que ambos procesos terminen
+    proceso_lectura.join()
+    proceso_suma.join()
+
+    print("Ambos procesos han terminado.")
+
+if __name__ == "__main__":
+    inicio=time.time()
+    main()
+    fin=time.time()
+    print("Tiempo:",fin-inicio)
+

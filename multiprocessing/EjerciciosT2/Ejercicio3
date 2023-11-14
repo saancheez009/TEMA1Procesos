@@ -1,0 +1,39 @@
+import multiprocessing
+import time
+
+def leer_numeros(nombre_archivo, cola):
+    with open(nombre_archivo, 'r') as archivo:
+        for linea in archivo:
+            numero = int(linea.strip())
+            cola.put(numero)
+
+def suma_desde_cola(cola):
+    suma_total = 0
+    while not cola.empty():
+        numero = cola.get()
+        suma_total += numero
+    print(f"La suma total es: {suma_total}")
+
+def main():
+    nombre_archivo = 'numeros.txt'  
+    cola = multiprocessing.Queue()
+
+    # Crear procesos
+    proceso_lectura = multiprocessing.Process(target=leer_numeros, args=(nombre_archivo, cola))
+    proceso_suma = multiprocessing.Process(target=suma_desde_cola, args=(cola,))
+
+    # Iniciar procesos
+    proceso_lectura.start()
+    proceso_suma.start()
+
+    # Esperar a que ambos procesos terminen
+    proceso_lectura.join()
+    proceso_suma.join()
+
+    print("Ambos procesos han terminado.")
+
+if __name__ == "__main__":
+    inicio=time.time()
+    main()
+    fin=time.time()
+    print("Tiempo:",fin-inicio)
