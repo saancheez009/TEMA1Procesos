@@ -15,7 +15,7 @@ def suma_desde_cola(cola):
     print(f"La suma total es: {suma_total}")
 
 def main():
-    nombre_archivo = 'numeros.txt'  
+    nombre_archivo = 'EjerciciosT2/numeros.txt'  
     cola = multiprocessing.Queue()
 
     # Crear procesos

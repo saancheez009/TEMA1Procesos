@@ -21,10 +21,9 @@ def suma_desde_tuberia(conexion_tuberia):
     print(f"La suma total es: {suma_total}")
 
 def main():
-    nombre_archivo = 'EjericiosT2/numeros.txt'  
+    nombre_archivo = 'EjerciciosT2/numeros.txt'  
     conexion_tuberia_padre, conexion_tuberia_hijo = multiprocessing.Pipe()
 
-    # Crear procesos
     proceso_lectura = multiprocessing.Process(target=leer_numeros, args=(nombre_archivo, conexion_tuberia_hijo))
     proceso_suma = multiprocessing.Process(target=suma_desde_tuberia, args=(conexion_tuberia_padre,))
 
