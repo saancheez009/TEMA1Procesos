@@ -1,8 +1,8 @@
 
 from flask import *
 
-from.periodistas.routes import periodistasBP
-from.articulos.routes import articulosBP
+from .periodistas.routes import periodistasBP
+from .articulos.routes import articulosBP
 from .users.routes import usersBP
 
 from flask import Flask

@@ -1,0 +1,20 @@
+import multiprocessing
+import time
+
+def suma_entre_valores(inicio, fin):
+    resultado = sum(range(min(inicio, fin), max(inicio, fin) + 1))
+    print(f"La suma de los números entre {inicio} y {fin} es: {resultado}")
+
+def main():
+    valores = [(1, 100), (200, 300), (10, 5)]
+
+    with multiprocessing.Pool(processes=len(valores)) as pool:
+        pool.starmap(suma_entre_valores, valores)
+
+    print("Todos los procesos han terminado.")
+
+if __name__ == "__main__":
+    main()
+    inicio=time.time()
+    fin=time.time()
+    print("Tiempo:",fin-inicio)

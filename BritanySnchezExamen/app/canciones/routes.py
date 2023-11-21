@@ -6,7 +6,7 @@ from app.utils.functions import *
 
 app=Flask(__name__)
 
-rutaFichero="app\ficheros\canciones.json"
+rutaFichero="app/ficheros/canciones.json"
 cancionesBP= Blueprint('canciones',__name__)
 
 def find_next_id():

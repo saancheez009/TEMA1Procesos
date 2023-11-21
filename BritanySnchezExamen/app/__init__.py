@@ -9,6 +9,7 @@ app =Flask(__name__)
 app.register_blueprint(bandasBP,url_prefix='/bandas')
 app.register_blueprint(cancionesBP, url_prefix='/canciones')
 app.register_blueprint(usersBP, url_prefix='/users')
+
 #RUN CODE
 
 if __name__=='__main__':

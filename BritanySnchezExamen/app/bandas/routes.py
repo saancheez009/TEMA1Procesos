@@ -1,11 +1,11 @@
 from flask import Flask,Blueprint,jsonify,request
 from flask_jwt_extended import jwt_required
 
-from app.utils.functions import escribeFichero, leeFichero 
+from utils.functions import escribeFichero, leeFichero 
 
 app=Flask(__name__)
 
-rutaFichero="app\ficheros\bandas.json"
+rutaFichero="app/ficheros/bandas.json"
 bandasBP = Blueprint('bandas',__name__)
 
 def find_next_id():

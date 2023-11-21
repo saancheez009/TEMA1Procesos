@@ -1,0 +1,40 @@
+import multiprocessing
+import time
+
+def leer_numeros(nombreArchivo, cola):
+    with open(nombreArchivo, 'r') as file:
+        for line in file:
+            numeros = [int(num) for num in line.split()]
+            cola.put(numeros)
+
+def suma(cola_resultado):
+    while True:
+        numeros = cola_resultado.get()
+        if numeros is None:
+            break
+
+        inicio, fin = numeros
+        suma = sum(range(min(inicio, fin), max(inicio, fin) + 1))
+        print(f"La suma de los números entre {inicio} y {fin} es: {suma}")
+
+
+if __name__ == "__main__":
+    
+    inicio=time.time()
+    fin=time.time()
+    nombreArchivo = 'EjerciciosT2/numerosSeparados.txt'
+
+    cola = multiprocessing.Queue()
+
+    proceso_leer = multiprocessing.Process(target=leer_numeros, args=(nombreArchivo, cola))
+    proceso_suma = multiprocessing.Process(target=suma, args=(cola,))
+
+    proceso_leer.start()
+    proceso_suma.start()
+
+    proceso_leer.join()
+    cola.put(None)  
+    proceso_suma.join()
+
+    print("Tiempo:",fin-inicio)
+    print("Todos los procesos han terminado.")
