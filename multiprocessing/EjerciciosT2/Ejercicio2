@@ -5,17 +5,15 @@ def suma_hasta_n(n):
     resultado = sum(range(1, n + 1))
     print(f"La suma hasta {n} es: {resultado}")
 
-def main():
+
+if __name__ == "__main__":
+    inicio=time.time()
+    fin=time.time()
     valores_n = [12, 6, 9]  
     numero_de_procesos = 2  
 
     with multiprocessing.Pool(processes=numero_de_procesos) as pool:
         pool.map(suma_hasta_n, valores_n)
-
-    print("Todos los procesos han terminado.")
-
-if __name__ == "__main__":
-    inicio=time.time()
-    main()
-    fin=time.time()
+    
     print("Tiempo:",fin-inicio)
+    print("Ambos procesos han terminado.")

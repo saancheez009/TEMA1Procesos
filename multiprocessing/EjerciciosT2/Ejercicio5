@@ -1,4 +1,5 @@
 import multiprocessing
+import time
 
 def sumar_entre_valores(inicio, fin):
     # inicio es menor o igual que fin
@@ -9,7 +10,6 @@ def sumar_entre_valores(inicio, fin):
     print(f"La suma de los números entre {inicio} y {fin} es: {suma}")
 
 if __name__ == "__main__":
-    #valores de inicio y fin para cada proceso
     valores_procesos = [(1, 100), (101, 200), (201, 300)]
     procesos = []
     for inicio, fin in valores_procesos:
@@ -23,5 +23,9 @@ if __name__ == "__main__":
     # Espera a que todos los procesos terminen
     for proceso in procesos:
         proceso.join()
+    
+    inicio=time.time()
+    fin=time.time()
+    print("Tiempo:",fin-inicio)
 
     print("Todos los procesos han terminado.")

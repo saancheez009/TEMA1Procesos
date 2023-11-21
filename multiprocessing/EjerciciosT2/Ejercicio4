@@ -7,7 +7,7 @@ def leer_numeros(nombre_archivo, conexion_tuberia):
             numero = int(linea.strip())
             conexion_tuberia.send(numero)
 
-    # Enviar None para indicar que no hay más números
+    #None para indica que no hay más números
     conexion_tuberia.send(None)
     conexion_tuberia.close()
 
@@ -19,27 +19,24 @@ def suma_desde_tuberia(conexion_tuberia):
             break
         suma_total += numero
     print(f"La suma total es: {suma_total}")
+  
 
-def main():
+if __name__ == "__main__":
+    inicio=time.time()
+    fin=time.time()
+    
     nombre_archivo = 'EjerciciosT2/numeros.txt'  
     conexion_tuberia_padre, conexion_tuberia_hijo = multiprocessing.Pipe()
 
     proceso_lectura = multiprocessing.Process(target=leer_numeros, args=(nombre_archivo, conexion_tuberia_hijo))
     proceso_suma = multiprocessing.Process(target=suma_desde_tuberia, args=(conexion_tuberia_padre,))
 
-    # Iniciar procesos
     proceso_lectura.start()
     proceso_suma.start()
 
-    # Esperar a que ambos procesos terminen
     proceso_lectura.join()
     proceso_suma.join()
-
-    print("Ambos procesos han terminado.")
-
-if __name__ == "__main__":
-    inicio=time.time()
-    main()
-    fin=time.time()
+    
     print("Tiempo:",fin-inicio)
+    print("Ambos procesos han terminado.")
 
