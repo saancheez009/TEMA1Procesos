@@ -1,0 +1,34 @@
+import multiprocessing
+
+def suma(pipe, valor_inicio, valor_fin):
+    suma = 0
+    for i in range(min(valor_inicio, valor_fin), max(valor_inicio, valor_fin) + 1):
+        suma += i
+    pipe.send(suma)
+
+def leer_numeros(pipe, nombre_archivo):
+    with open(nombre_archivo, 'r') as archivo:
+        for linea in archivo:
+            num1, num2 = map(int, linea.split())
+            pipe.send((num1, num2))
+
+if __name__ == "__main__":
+   
+    tuberia, extremo_opuesto = multiprocessing.Pipe()
+    proceso_lectura = multiprocessing.Process(target=leer_numeros, args=(tuberia, 'EjerciciosT2/numeros.txt'))
+    proceso_suma = multiprocessing.Process(target=suma, args=(extremo_opuesto, 0, 0))
+
+    proceso_lectura.start()
+    proceso_suma.start()
+
+    proceso_lectura.join()
+
+    extremo_opuesto.close()
+
+    resultado_suma = extremo_opuesto.recv()
+
+    print(f"La suma total es: {resultado_suma}")
+    
+    proceso_suma.join()
+
+    print("Todos los procesos han terminado.")
