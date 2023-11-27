@@ -1,0 +1,15 @@
+import multiprocessing
+
+fichero = "Tema2Pt2/vocales.txt"
+def cuentaVocales(caracter):
+    contador=0
+    with open(fichero,"r") as archivo:
+        letras = archivo.read()
+        contador =letras.count(caracter)
+    return contador
+
+if __name__ =="__main__":
+    with multiprocessing.Pool(5) as pool:
+        vocales=["a","e","i","o","u"]
+        cantidades= pool.map(cuentaVocales,vocales)
+        print(cantidades)
