@@ -1,0 +1,48 @@
+from multiprocessing import Process, Queue
+
+def proceso1(ruta, year, output_queue):
+    with open(ruta, 'r') as file:
+        lines = file.readlines()
+        movies_in_year = [line.strip() for line in lines if line.split(';')[-1].strip() == str(year)]
+        output_queue.put(movies_in_year)
+
+def proceso2(output_queue):
+    movies = []
+    while not output_queue.empty():
+        movies.extend(output_queue.get())
+    
+    if movies:
+        year = movies[0].split(';')[-1].strip()
+        output_filename = f'peliculas{year}.txt'
+        with open(output_filename, 'w') as output_file:
+            output_file.write('\n'.join(movies))
+        print(f'Películas almacenadas en el archivo {output_filename}')
+
+def main():
+    year = int(input("Introduce un año (menor al actual): "))
+    if year >= 2023: 
+        print("El año debe ser menor al actual.")
+        return
+    
+    ruta_fichero = input("Introduce la ruta del fichero de películas: ")
+    try:
+        with open(ruta_fichero, 'r'):
+            pass
+    except FileNotFoundError:
+        print("El fichero no existe.")
+        return
+
+    output_queue = Queue()
+
+    # Proceso 1
+    p1 = Process(target=proceso1, args=(ruta_fichero, year, output_queue))
+    p1.start()
+    p1.join()
+
+    # Proceso 2
+    p2 = Process(target=proceso2, args=(output_queue,))
+    p2.start()
+    p2.join()
+
+if __name__ == "__main__":
+    main()

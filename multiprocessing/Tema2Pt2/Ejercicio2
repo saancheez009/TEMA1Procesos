@@ -1,0 +1,41 @@
+import multiprocessing
+import random
+import ipaddress
+
+def proceso1(pipe):
+    direcciones_ip = [str(ipaddress.IPv4Address(random.randint(2**24, 2**32 - 1))) for _ in range(10)]
+    print("Proceso 1: Direcciones IP generadas:", direcciones_ip)
+    pipe.send(direcciones_ip)
+    pipe.close()
+
+def proceso2(pipe1, pipe2):
+    direcciones_ip = pipe1.recv()
+    direcciones_filtradas = [ip for ip in direcciones_ip if ipaddress.IPv4Address(ip).is_private]
+    print("Proceso 2: Direcciones IP filtradas:", direcciones_filtradas)
+    pipe2.send(direcciones_filtradas)
+    pipe1.close()
+    pipe2.close()
+
+def proceso3(pipe):
+    direcciones_ip = pipe.recv()
+    for ip in direcciones_ip:
+        clase = ipaddress.IPv4Address(ip).exploded.split('.')[0]
+        print(f"Proceso 3: Dirección IP {ip} pertenece a la clase {clase}")
+    pipe.close()
+
+if __name__ == '__main__':
+    # Crea tuberías para la comunicación entre procesos
+    pipe1_2, pipe2_3 = multiprocessing.Pipe()
+
+    # Lanza los procesos en orden
+    p1 = multiprocessing.Process(target=proceso1, args=(pipe1_2,))
+    p2 = multiprocessing.Process(target=proceso2, args=(pipe1_2, pipe2_3))
+    p3 = multiprocessing.Process(target=proceso3, args=(pipe2_3,))
+
+    p1.start()
+    p2.start()
+    p3.start()
+
+    p1.join()
+    p2.join()
+    p3.join()

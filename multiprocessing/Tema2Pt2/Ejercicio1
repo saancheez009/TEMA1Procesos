@@ -1,15 +1,22 @@
+        
 import multiprocessing
 
-fichero = "Tema2Pt2/vocales.txt"
-def cuentaVocales(caracter):
-    contador=0
-    with open(fichero,"r") as archivo:
-        letras = archivo.read()
-        contador =letras.count(caracter)
-    return contador
+def contar_vocal(vocal, archivo):
+    with open(archivo, 'r') as file:
+        contenido = file.read()
+    count = sum(1 for char in contenido if char.lower() == vocal.lower())
+    return vocal, count
 
-if __name__ =="__main__":
-    with multiprocessing.Pool(5) as pool:
-        vocales=["a","e","i","o","u"]
-        cantidades= pool.map(cuentaVocales,vocales)
-        print(cantidades)
+def contar_vocales_paralelo(archivo):
+    vocales = ['a', 'e', 'i', 'o', 'u']
+    
+    resultados = []
+    with multiprocessing.Pool() as pool:
+        resultados = pool.starmap(contar_vocal, [(vocal, archivo) for vocal in vocales])
+
+    for vocal, count in resultados:
+        print(f"La vocal {vocal} aparece {count} veces en el archivo.")
+
+if __name__ == "__main__":
+    archivo_path = "Tema2Pt2/vocales.txt"  # Reemplaza con la ruta de tu archivo
+    contar_vocales_paralelo(archivo_path)

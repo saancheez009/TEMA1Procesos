@@ -1,0 +1,49 @@
+import random
+from multiprocessing import Pool
+
+def generar_numeros_aleatorios(i):
+    filename = f'Alumno{i}.txt'
+    with open(filename, 'w') as file:
+        for _ in range(6):
+            nota = round(random.uniform(1, 10), 2)
+            file.write(f'{nota}\n')
+
+def calcular_media_y_guardar(i):
+    filename = f'Alumno{i}.txt'
+    with open(filename, 'r') as file:
+        notas = [float(line.strip()) for line in file]
+
+    media = round(sum(notas) / len(notas), 2)
+
+    with open('medias.txt', 'a') as medias_file:
+        medias_file.write(f'{media} {filename}\n')
+
+def encontrar_maxima_nota():
+    with open('medias.txt', 'r') as medias_file:
+        lineas = medias_file.readlines()
+
+    maxima_nota = 0
+    alumno_max_nota = ''
+
+    for linea in lineas:
+        nota, alumno = linea.strip().split(' ')
+        if float(nota) > maxima_nota:
+            maxima_nota = float(nota)
+            alumno_max_nota = alumno
+
+    print(f'La nota máxima es {maxima_nota} y pertenece a {alumno_max_nota}')
+
+def main():
+    # Generar números aleatorios
+    with Pool(processes=10) as pool:
+        pool.map(generar_numeros_aleatorios, range(1, 11))
+
+    # Calcular medias
+    with Pool(processes=10) as pool:
+        pool.map(calcular_media_y_guardar, range(1, 11))
+
+    # Encontrar máxima nota
+    encontrar_maxima_nota()
+
+if __name__ == '__main__':
+    main()
