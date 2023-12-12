@@ -1,0 +1,23 @@
+from multiprocessing import Pool
+#Proceso 1
+#Este proceso recibe el nombre de un departamento y envia al proceso 2 la informacion del departamento
+def process1(dep):
+    with open('salarios.txt','r') as depfile:
+        lineas =[(dep) for line in depfile]
+        
+
+#Proceso2
+#Este proceso recibe un salario mínimo introducido por el usuario y envía al proceso 3los salarios mayores o iguales al salario minimo
+def process2(sal_minimo):
+    
+#Proceso 3
+#Este proceso recibe lo enviado por el proceso 2 y lo escribe en un fichero llamado 'empleados.txt'
+def process3():
+    
+
+if __name__ == '__main__':
+    #Se le pide al usuario el nombre de un departamento y un salario mínimo
+    print(f'Por favor introduzca el nombre de un departamento: ')
+    dep = 
+    print (f'por favor introduzca un salario minimo: ')
+    sal_minimo=

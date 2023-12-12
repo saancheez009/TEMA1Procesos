@@ -1,0 +1,82 @@
+from multiprocessing import Pool
+import random
+
+
+# Proceso 1
+def process1(i):
+    #nombre del fichero creado
+    filename = f'Ejercicio1/{i}-12.txt'
+    #Escribimos en el fichero 24 temperaturas aleatorias para las 24 horas del día 
+    with open(filename,'w') as file:
+        for _ in range(24):
+            #Las temperaturas serán de 0 a 20 grados
+            temp = round(random.uniform(0,20),2)
+            file.write(f'{temp}\n')
+            
+# Proceso 2
+#Calculamos las temperaturas máximas de cada día
+def process2(i):
+    #recorremos los ficheros de los días del mes para calcular la temp maxima
+    tempfile= f'Ejercicio1/{i}-12.txt'
+    with open(tempfile, 'r') as temperaturas_file:
+    
+        temperaturas = [float(line.strip())for line in temperaturas_file]
+        
+    maxima_temp = 0
+    #calculamos la temperatura máxima del día
+    for linea in temperaturas:
+        temp = linea.strip()
+        if float(temp) > maxima_temp:
+            maxima_temp = float(temp)
+            
+#Escribimos las temperaturas máximas de cada día en el fichero 'maximas.txt'
+    with open('Ejercicio1/maximas.txt', 'a') as maximas_file:
+        maximas_file.write(f'{tempfile} : {maxima_temp}')
+        
+
+            
+  
+
+# Proceso 3
+#Calculamos las temperaturas minimas de cada día
+def process3(i):
+    #recorremos los ficheros de los días del mes para calcular la temp minima
+    tempfile= f'Ejercicio1/{i}-12.txt'
+    with open(tempfile, 'r') as temperaturas_file:
+    
+        temperaturas = [float(line.strip())for line in temperaturas_file]
+        
+    minima_temp = 0
+    #calculamos la temperatura minima del día
+    for linea in temperaturas:
+        temp = linea.strip()
+        if float(temp) < minima_temp:
+            minima_temp = float(temp)
+            
+#Escribimos las temperaturas minimas de cada día en el fichero 'minimas.txt'
+    with open('Ejercicio1/minimas.txt', 'a') as minimas_file:
+        minimas_file.write(f'{tempfile} : {minima_temp}')
+        
+
+
+if __name__ == '__main__':
+    # Genera temperaturas aleatorias 
+    with Pool(processes=31) as pool:
+        #Creamos 31 ficheros ya que el mes de diciembre tiene 31 días y necesitamos temperaturas para cada día
+        pool.map(process1, range(1, 32))
+
+        #Creamos 31 ficheros para anotar las temperaturas máximas de cada día de diciembre
+    with Pool(processes=31) as pool:
+        pool.map(process2, range(1, 32))
+        #Creamos 31 ficheros para anotar las temperaturas minimas de cada dia de diciembre
+    with Pool(processes=31) as pool:
+        pool.map(process3, range (1,32))
+
+
+
+
+
+
+
+
+    
