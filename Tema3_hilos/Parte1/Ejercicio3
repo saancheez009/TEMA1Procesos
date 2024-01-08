@@ -1,0 +1,38 @@
+import threading
+import random
+
+class JuegoAdivinanza(threading.Thread):
+    numero_adivinar = random.randint(0, 100)
+    acertado = False
+    lock = threading.Lock()
+
+    def __init__(self, nombre):
+        super().__init__()
+        self.nombre = nombre
+
+    def run(self):
+        while not JuegoAdivinanza.acertado:
+            numero_intentado = random.randint(0, 100)
+
+            with JuegoAdivinanza.lock:
+                if JuegoAdivinanza.acertado:
+                    break
+
+                if numero_intentado == JuegoAdivinanza.numero_adivinar:
+                    print(f"{self.nombre} ha adivinado el número {JuegoAdivinanza.numero_adivinar}!")
+                    JuegoAdivinanza.acertado = True
+                else:
+                    print(f"{self.nombre} intentó con {numero_intentado}, pero no adivinó.")
+
+if __name__ == "__main__":
+    hilos = []
+
+    # Crear 10 hilos
+    for i in range(10):
+        hilo = JuegoAdivinanza(f"Hilo-{i + 1}")
+        hilos.append(hilo)
+        hilo.start()
+
+    # Esperar a que alguien acierte
+    for hilo in hilos:
+        hilo.join()

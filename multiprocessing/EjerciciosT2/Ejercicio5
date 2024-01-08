@@ -1,7 +1,7 @@
 import multiprocessing
 import time
 
-def sumar_entre_valores(inicio, fin):
+def suma(inicio, fin):
     # inicio es menor o igual que fin
     if inicio > fin:
         inicio, fin = fin, inicio
@@ -13,7 +13,7 @@ if __name__ == "__main__":
     valores_procesos = [(1, 100), (101, 200), (201, 300)]
     procesos = []
     for inicio, fin in valores_procesos:
-        proceso = multiprocessing.Process(target=sumar_entre_valores, args=(inicio, fin))
+        proceso = multiprocessing.Process(target=suma, args=(inicio, fin))
         procesos.append(proceso)
 
     # Inicia todos los procesos

@@ -1,0 +1,28 @@
+import threading
+import time
+import random
+
+class Hilos(threading.Thread):
+    def __init__(self, nombre):
+        super().__init__()
+        self.nombre = nombre
+
+    def run(self):
+        while True:
+            print(f"Soy {self.nombre} y estoy trabajando")
+            tiempo_de_espera = random.randint(1, 10)
+            time.sleep(tiempo_de_espera)
+            print(f"Soy {self.nombre} y he terminado de trabajar")
+
+if __name__ == "__main__":
+    hilos = []
+
+    # Crear 5 instancias de Hilos
+    for nombre in ["Juan", "Maria", "Carlos", "Laura", "Pedro"]:
+        hilo = Hilos(nombre)
+        hilos.append(hilo)
+        hilo.start()
+
+    # Esperar a que todos los hilos se ejecuten al menos una vez
+    for hilo in hilos:
+        hilo.join()

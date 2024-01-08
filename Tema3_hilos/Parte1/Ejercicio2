@@ -1,0 +1,32 @@
+import threading
+
+class MyThread(threading.Thread):
+    variable_compartida = 0
+    lock = threading.Lock()
+
+    def __init__(self, num, nombre):
+        super().__init__()
+        self.num = num
+        self.nombre = nombre
+
+    def run(self):
+        while MyThread.variable_compartida < 1000:
+            with MyThread.lock:
+                if MyThread.variable_compartida < 1000:
+                    MyThread.variable_compartida += 1
+                    print(f"{self.nombre}: Contador: {MyThread.variable_compartida}")
+
+if __name__ == "__main__":
+    hilos = []
+
+    # Crear 10 hilos
+    for i in range(10):
+        hilo = MyThread(i + 1, f"Hilo-{i + 1}")
+        hilos.append(hilo)
+        hilo.start()
+
+    # Esperar a que todos los hilos terminen
+    for hilo in hilos:
+        hilo.join()
+
+    print("Contador final:", MyThread.variable_compartida)
