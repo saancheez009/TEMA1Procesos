@@ -7,18 +7,18 @@ def contar_vocales(vocal, filename):
         print(f"El hilo para la vocal '{vocal}' ha contado {count} veces en el archivo.")
 
 if __name__ == "__main__":
-    filename = "tu_archivo.txt"  # Reemplaza "tu_archivo.txt" con el nombre de tu archivo
+    filename = "Parte1/vocales.txt" 
 
     vocales = ['a', 'e', 'i', 'o', 'u']
     threads = []
 
-    # Crear 5 hilos, uno para cada vocal
+    # Crea 5 hilos, uno para cada vocal
     for vocal in vocales:
         hilo = threading.Thread(target=contar_vocales, args=(vocal, filename))
         threads.append(hilo)
         hilo.start()
 
-    # Esperar a que todos los hilos terminen
+    # Espera a que los hilos terminen
     for hilo in threads:
         hilo.join()
 

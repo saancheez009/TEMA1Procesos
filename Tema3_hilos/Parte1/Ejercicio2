@@ -19,13 +19,12 @@ class MyThread(threading.Thread):
 if __name__ == "__main__":
     hilos = []
 
-    # Crear 10 hilos
     for i in range(10):
         hilo = MyThread(i + 1, f"Hilo-{i + 1}")
         hilos.append(hilo)
         hilo.start()
 
-    # Esperar a que todos los hilos terminen
+    # Espera a que los hilos terminen
     for hilo in hilos:
         hilo.join()
 

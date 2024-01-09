@@ -17,12 +17,11 @@ class Hilos(threading.Thread):
 if __name__ == "__main__":
     hilos = []
 
-    # Crear 5 instancias de Hilos
     for nombre in ["Juan", "Maria", "Carlos", "Laura", "Pedro"]:
         hilo = Hilos(nombre)
         hilos.append(hilo)
         hilo.start()
 
-    # Esperar a que todos los hilos se ejecuten al menos una vez
+    # Espera a que todos los hilos se ejecuten al menos una vez
     for hilo in hilos:
         hilo.join()
