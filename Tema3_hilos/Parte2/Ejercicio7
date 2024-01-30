@@ -1,0 +1,44 @@
+import threading
+import queue
+import time
+import random
+
+cola = queue.Queue(maxsize=1)
+
+
+def productor():
+    global cola
+
+    for i in range(5):
+        dato = f"Dato-{i}"
+
+        # Intenta poner el dato en la cola
+        cola.put(dato)
+        print(f"Productor ha producido: {dato}")
+
+        # Tiempo de producción
+        time.sleep(random.uniform(0.5, 1))
+
+def consumidor():
+    global cola
+
+    for i in range(5):
+        # Intentarobtener un dato de la cola
+        dato = cola.get()
+        print(f"Consumidor ha consumido: {dato}")
+
+        #Tiempo de consumo
+        time.sleep(random.uniform(0.5, 1))
+
+if __name__ == "__main__":
+
+    hilo_productor = threading.Thread(target=productor)
+    hilo_consumidor = threading.Thread(target=consumidor)
+
+    # Inicia los hilos
+    hilo_productor.start()
+    hilo_consumidor.start()
+
+    # Espera a que ambos hilos terminen
+    hilo_productor.join()
+    hilo_consumidor.join()

@@ -1,0 +1,84 @@
+import threading
+import time
+import random
+
+cola_carniceria = []
+cola_charcuteria = []
+numEmp_carniceria = 4
+numEmp_charcuteria = 2
+semEmp_carniceria = threading.Semaphore(numEmp_carniceria)
+semEmp_charcuteria = threading.Semaphore(numEmp_charcuteria)
+
+# Llegada de un cliente a la Carnicería
+def llegada_carniceria(nombre_cliente):
+    global cola_carniceria
+
+    semEmp_carniceria.acquire()
+
+    with threading.Lock():
+        print(f"El cliente {nombre_cliente} está siendo atendido en la Carnicería.")
+
+    #Tiempo que tarda el carnicero en preparar la carne
+    tiempoPrep = random.uniform(1, 10)
+    time.sleep(tiempoPrep)
+
+    with threading.Lock():
+        print(f"El cliente {nombre_cliente} ha terminado en la Carnicería.")
+
+    semEmp_carniceria.release()
+
+# Llegada de un cliente a la Charcutería
+def llegada_charcuteria(nombre_cliente):
+    global cola_charcuteria
+
+    semEmp_charcuteria.acquire()
+
+    with threading.Lock():
+        print(f"El cliente {nombre_cliente} está siendo atendido en la Charcutería.")
+
+    # Tiempo que tarda el charcutero en preparar los productos
+    tiempoPrep = random.uniform(1, 10)
+    time.sleep(tiempoPrep)
+
+    with threading.Lock():
+        print(f"El cliente {nombre_cliente} ha terminado en la Charcutería.")
+
+    semEmp_charcuteria.release()
+
+def atencion_cliente(nombre_cliente):
+    global cola_carniceria, cola_charcuteria
+
+    # Dice aleatoriamente si el cliente va a la Carnicería o la Charcutería primero
+    if random.choice([True, False]):
+        with threading.Lock():
+            print(f"El cliente {nombre_cliente} ha llegado a la Carnicería y está esperando.")
+        cola_carniceria.append(nombre_cliente)
+        llegada_carniceria(nombre_cliente)
+
+        with threading.Lock():
+            print(f"El cliente {nombre_cliente} se dirige a la Charcutería.")
+        cola_charcuteria.append(nombre_cliente)
+        llegada_charcuteria(nombre_cliente)
+    else:
+        with threading.Lock():
+            print(f"El cliente {nombre_cliente} ha llegado a la Charcutería y está esperando.")
+        cola_charcuteria.append(nombre_cliente)
+        llegada_charcuteria(nombre_cliente)
+
+        with threading.Lock():
+            print(f"El cliente {nombre_cliente} se dirige a la Carnicería.")
+        cola_carniceria.append(nombre_cliente)
+        llegada_carniceria(nombre_cliente)
+
+if __name__ == "__main__":
+    hilos_clientes = []
+
+    for i in range(10):
+        nombre_cliente = f"Cliente{i+1}"
+        cliente = threading.Thread(target=atencion_cliente, args=(nombre_cliente,))
+        hilos_clientes.append(cliente)
+        cliente.start()
+
+    for cliente in hilos_clientes:
+        cliente.join()
+

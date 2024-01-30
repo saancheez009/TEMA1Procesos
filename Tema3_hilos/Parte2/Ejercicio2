@@ -1,0 +1,38 @@
+import threading
+import time
+import random
+
+condicion = threading.Condition()
+cola = []
+
+def llegada_cliente(nombre_cliente):
+    with condicion:
+        print(f"{nombre_cliente} ha llegado a la panadería y se encuentra esperando.")
+        cola.append(nombre_cliente)
+        condicion.notify()  # Notificar al dependiente que hay un nuevo cliente
+
+#Comportamiento del dependiente
+def dependiente():
+    while True:
+        with condicion:
+            while not cola:
+                condicion.wait()  # Espera hasta que haya clientes en la cola
+
+            cliente_actual = cola.pop(0)
+            print(f"El dependiente está atendiendo a {cliente_actual}.")
+            
+            tiempo = random.uniform(1, 5)
+            time.sleep(tiempo)
+
+            print(f"{cliente_actual} ha sido atendido en {tiempo:.2f} segundos.")
+
+
+if __name__ == "__main__":
+    dependienteH = threading.Thread(target=dependiente)
+    dependienteH.start()
+
+    # Crea clientes
+    clientes = ["Cliente1", "Cliente2", "Cliente3"]
+
+    for cliente in clientes:
+        threading.Thread(target=llegada_cliente, args=(cliente,)).start()

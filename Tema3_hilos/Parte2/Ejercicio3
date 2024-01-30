@@ -1,0 +1,37 @@
+import threading
+import time
+import random
+
+
+cola = []
+numEmp = 4
+sem_empleados = threading.Semaphore(numEmp)
+
+# Llega un cliente a la carnicería
+def llegada_cliente(nombre_cliente):
+    global cola
+
+    sem_empleados.acquire()
+    
+    with threading.Lock():
+        print(f"El cliente {nombre_cliente} está siendo atendido.")
+    
+    # Tiempo que tarda el carnicero en preparar la carne
+    tiempo = random.uniform(1, 10)
+    time.sleep(tiempo)
+
+    with threading.Lock():
+        print(f"El cliente {nombre_cliente} ha terminado en la carnicería.")
+
+
+if __name__ == "__main__":
+    clientes = []
+
+    for i in range(10):
+        nombre_cliente = f"Cliente{i+1}"
+        client = threading.Thread(target=llegada_cliente, args=(nombre_cliente,))
+        clientes.append(client)
+        client.start()
+
+    for client in clientes:
+        client.join()
