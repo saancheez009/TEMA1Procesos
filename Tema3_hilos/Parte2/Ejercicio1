@@ -14,7 +14,7 @@ class JuegoAdivinanza(threading.Thread):
         while not JuegoAdivinanza.numAcertado:
             numero_intentado = random.randint(0, 100)
 
-            with JuegoAdivinanza.lock:  #(indica que el estado esta cerrado pero da eror al ejecutar con esta linea)
+            with JuegoAdivinanza.lock:
                 if JuegoAdivinanza.numAcertado:
                  break
 
