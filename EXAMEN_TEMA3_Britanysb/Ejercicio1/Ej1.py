@@ -1,4 +1,4 @@
-from threading import Thread, Semaphore, Event
+from threading import Thread, Semaphore
 import time, random
 
 #He elegido como método de sincronización Semaphore ya que para utilizar las máquinas o ser atendidos los clientes deberan esperar hasta que una de las máquinas estén libres
@@ -10,17 +10,12 @@ class Hamburgueseria(Thread):
     #número de dependientes, semáforo
     dependientesem= Semaphore(5)
     
-    def __init__(self,nombre, event:Event):
+    def __init__(self,nombre):
         Thread.__init__(self, name=nombre)
-        self.evento=Event
     
     def run(self):
-        #El cliente espera hasta que la máquina esté libre 
-        while not self.evento.is_set():
-            self.evento.wait()
-        self.evento.clear()
-        #Cliente va a una máquina que esté libre
-        print(self.name,"va a una máquina ")
+        #Cliente va a una máquina que esté libre, sino, espera
+        print(self.name,"va a una máquina y espera")
         Hamburgueseria.maquinas.acquire()
         print(self.name,"está sacando el ticket")
         #tiempo de espera aleatorio hasta que la máquina le da el ticket al cliente
@@ -38,7 +33,7 @@ class Hamburgueseria(Thread):
         Hamburgueseria.dependientesem.release()
         print(self.name,"se va de la hamburgueseria")
         #Elcliente tiene su pedido y se va de la hamburguesería
-        self.evento.set()
+
 
 if __name__ == "__main__":
     hilos = []
