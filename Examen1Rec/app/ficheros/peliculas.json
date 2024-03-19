@@ -1,4 +1,3 @@
-[
-    {"id":1, "titulo":"Titanic", "anyoLanzamiento": 1997},
-    {"id":2, "titulo":"Iron Man", "anyoLanzamiento": 2008}
-]
+[{"id": 1, "titulo": "Titanic", "anyoLanzamiento": 1997}, 
+{"id": 2, "titulo": "Iron Man", "anyoLanzamiento": 2008},
+ {"titulo": "Iron Man 2", "anyoLanzamiento": 2012, "id": 3}]

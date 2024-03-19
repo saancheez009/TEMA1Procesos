@@ -1,6 +1,32 @@
 [
-    {"id":1, "nombre":"Leonardo DiCaprio", "nacionalidad": "estadounidense", "idPelicula":1},
-    {"id":2, "nombre":"Kate Winslet", "nacionalidad": "estadounidense", "idPelicula":1},
-    {"id":3, "nombre":"Robert Downey", "nacionalidad": "estadounidense", "idPelicula":2},
-    {"id":4, "nombre":"Gwyneth Paltrow", "nacionalidad": "estadounidense", "idPelicula":2}
+    {
+        "id": 1,
+        "nombre": "Leonardo DiCaprio",
+        "nacionalidad": "estadounidense",
+        "idPelicula": 1
+    },
+    {
+        "id": 2,
+        "nombre": "Kate Winslet",
+        "nacionalidad": "Britanica",
+        "idPelicula": 1
+    },
+    {
+        "id": 3,
+        "nombre": "Robert Downey",
+        "nacionalidad": "estadounidense",
+        "idPelicula": 2
+    },
+    {
+        "id": 4,
+        "nombre": "Gwyneth Paltrow",
+        "nacionalidad": "estadounidense",
+        "idPelicula": 2
+    },
+    {
+        "nombre": "Tom Holland",
+        "nacionalidad": "britanico",
+        "idPelicula": 2,
+        "id": 5
+    }
 ]

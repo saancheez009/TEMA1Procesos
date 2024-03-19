@@ -1,6 +1,5 @@
-from flask import Blueprint, request
-
-from utils.functions import escribeFichero, leeFichero
+from flask import Blueprint, jsonify, request
+from utils.functions import *
 
 actoresBP = Blueprint('actores',__name__)
 rutaActores="app/ficheros/actores.json"
@@ -15,22 +14,29 @@ def getActor(id_actor):
             return actor,200
     return{"error" : "Actor no encontrado"},404
 
+@actoresBP.get('/')
+def getActores():
+    actores=leeFichero(rutaActores)
+    return jsonify(actores),200
+
 @actoresBP.post('/')
 def agregarActor():
-    nuevo_actor = request.json
-    actores = leeFichero(rutaActores)
-    
-    if "PeliculaId" not in nuevo_actor:
-        return {"error": "Falta el campo PeliculaId en el nuevo actor"}, 400
-    
-    # Verifica si el PeliculaId existe en la lista de películas
-    peliculas = leeFichero(rutaPeliculas)
-    if not any(pelicula["id"] == nuevo_actor["PeliculaId"] for pelicula in peliculas):
-        return {"error": "El id de la pelicula no existe en la lista de películas"}, 404
-    
-    actores.append(nuevo_actor)
-    escribeFichero(rutaActores, actores)
-    return nuevo_actor, 201
+    if request.is_json:
+        actores = leeFichero(rutaActores)
+        peliculas=leeFichero(rutaPeliculas)
+        nuevo_actor=request.get_json()
+        for pelicula in peliculas:
+            if pelicula["id"]==nuevo_actor["idPelicula"]:
+                nuevo_actor["id"]=nuevo_id(actores)
+                actores.append(nuevo_actor)
+                escribeFichero(rutaActores, actores)
+                return nuevo_actor,201
+                #se añadirá el actor ala lista de actores
+                #calcular nuevo id
+        return {"error": "La pelicula no existe"},404
+    return {"error": "JSON no correcto"},415
+
+
 
 # Método DELETE para eliminar un actor por su ID
 @actoresBP.delete('/<int:id_actor>')

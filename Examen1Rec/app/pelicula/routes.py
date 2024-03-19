@@ -17,19 +17,28 @@ def getPelicula(id_pelicula):
 # Método GET para obtener una película con la lista de actores
 @peliculasBP.get('/<int:id_pelicula>/actores')
 def getPeliculaConActores(id_pelicula):
-    peliculas = leeFichero(rutaPeliculas)
     actores = leeFichero(rutaActores)
+    lista=[]
+    
+    for actor in actores:
+        if actor["idPelicula"]==id_pelicula:
+            lista.append(actor)
+    if len(lista)>0:
+        return lista,200
+    return {"error": "no hay actores para la pelicula"},404
 
-    for pelicula in peliculas:
-        if pelicula["id"] == id_pelicula:
-            actores_pelicula = [actor for actor in actores if actor["idPelicula"] == id_pelicula]
-            if actores_pelicula:
-                pelicula["actores"] = actores_pelicula
-                return pelicula, 200
-            else:
-                return {"error": "No hay actores para esta película"}, 404
+   # for pelicula in peliculas:
+   #     if pelicula["id"] == id_pelicula:
+   #         actores_pelicula = [actor for actor in actores if actor["idPelicula"] == id_pelicula]
+   #         if actores_pelicula:
+   #             pelicula["actores"] = actores_pelicula
+   #             return pelicula, 200
+   #         else:
+   #             return {"error": "No hay actores para esta película"}, 404
 
-        return {"error": "Pelicula no encontrada"}, 404
+   #     return {"error": "Pelicula no encontrada"}, 404
+   
+   #Si el ID que se intenta modificar no existe, se debe añadir un nuevo recurso con los datos pasados en el JSON. Si existe, se modifican los datos indicados en el JSON.
     
 @peliculasBP.put('/<int:id_pelicula>')
 def modificarPelicula(id_pelicula):

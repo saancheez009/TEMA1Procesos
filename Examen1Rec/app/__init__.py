@@ -1,4 +1,4 @@
-from flask import Blueprint, Flask
+from flask import Flask
 
 from pelicula.routes import peliculasBP
 from actores.routes import actoresBP
