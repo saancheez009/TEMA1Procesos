@@ -46,7 +46,7 @@ def eliminarActor(id_actor):
     for actor in actores:
         if actor["id"] == id_actor:
             actores.remove(actor)
-            escribeFichero(rutaActores, actores)
-            return {"mensaje": "Actor eliminado correctamente"}, 200
+            escribeFichero(actores, rutaActores)
+            return {}, 200
     
     return {"error": "Actor no encontrado"}, 404
