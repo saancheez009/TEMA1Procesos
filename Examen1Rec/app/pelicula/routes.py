@@ -1,4 +1,5 @@
 from flask import Blueprint, request
+from flask_jwt_extended import jwt_required
 
 from utils.functions import *
 rutaActores="app/ficheros/actores.json"
@@ -41,18 +42,22 @@ def getPeliculaConActores(id_pelicula):
    #Si el ID que se intenta modificar no existe, se debe añadir un nuevo recurso con los datos pasados en el JSON. Si existe, se modifican los datos indicados en el JSON.
     
 @peliculasBP.put('/<int:id_pelicula>')
+@jwt_required()
 def modificarPelicula(id_pelicula):
     peliculas = leeFichero(rutaPeliculas)
-    nueva_pelicula = request.json
+    if request.is_json: 
+        nueva_pelicula = request.get_json()
 
-    for pelicula in peliculas:
-        if pelicula["id"] == id_pelicula:
-            pelicula.update(nueva_pelicula)  # Modifica los datos existentes con los datos proporcionados en el JSON
-            escribeFichero(rutaPeliculas, peliculas)
-            return pelicula, 200
-    
-    # Si el ID no existe, añadir un nuevo recurso con los datos pasados en el JSON
-    nueva_pelicula["id"] = id_pelicula
-    peliculas.append(nueva_pelicula)
-    escribeFichero(rutaPeliculas, peliculas)
-    return nueva_pelicula, 201
+        for pelicula in peliculas:
+            if pelicula["id"] == id_pelicula:
+                pelicula.update(nueva_pelicula)  # Modifica los datos existentes con los datos proporcionados en el JSON
+                escribeFichero(rutaPeliculas, peliculas)
+                return pelicula, 200
+        
+        # Si el ID no existe, añadir un nuevo recurso con los datos pasados en el JSON
+        nueva_pelicula["id"] = id_pelicula
+        peliculas.append(nueva_pelicula)
+        escribeFichero(rutaPeliculas, peliculas)
+        return nueva_pelicula, 201
+    else:
+        return {"error":"JSON erróneo"},415
