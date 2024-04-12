@@ -42,7 +42,7 @@ def getPeliculaConActores(id_pelicula):
    #Si el ID que se intenta modificar no existe, se debe añadir un nuevo recurso con los datos pasados en el JSON. Si existe, se modifican los datos indicados en el JSON.
     
 @peliculasBP.put('/<int:id_pelicula>')
-@jwt_required()
+
 def modificarPelicula(id_pelicula):
     peliculas = leeFichero(rutaPeliculas)
     if request.is_json: 

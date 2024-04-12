@@ -1,8 +1,8 @@
 import requests
-url="http://localhost:5050/users"
+url="http://localhost:5051/users"
 
-usuario = { "username": "Manolo",
-        "password": "hola"}
+usuario = { "username": "Ana",
+        "password": "anita"}
 
 response = requests.post(url, json=usuario)
 codigo = response.status_code

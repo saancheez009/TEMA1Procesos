@@ -2,7 +2,7 @@ import requests
 
 url_user="http://localhost:5050/users"
 
-usuario={"username":"britany","password":"h"}
+usuario={"username":"brit","password":"24326224313224733662646f6331346139775538586f6e3345474d4e4f467a62526b4677524e4d36796a6868614a326634434e724456726a75454375"}
 
 respuestaUsuario=requests.get(url_user, json=usuario)
 
@@ -14,7 +14,7 @@ if codigousuario == 200:
     valor_token =json["token"]
     cabecera={'Authorization': f'Bearer{valor_token}'}
     
-    urlActor="http://localhost:5050/actores/1"
+    urlActor="http://localhost:5050/actores/5"
     respuestaActor=requests.delete(urlActor,headers=cabecera)
     
     if respuestaActor==200:

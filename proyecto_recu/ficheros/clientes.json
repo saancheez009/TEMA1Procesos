@@ -1,0 +1,37 @@
+[
+    {
+      "id_cliente": 1,
+      "nombre_cliente": "Juan Pérez",
+      "direccion_envio": "Calle Principal 123, Ciudad A",
+      "correo_electronico": "juan@example.com",
+      "numero_telefono": "123-456-7890"
+    },
+    {
+      "id_cliente": 2,
+      "nombre_cliente": "Ana Gómez",
+      "direccion_envio": "Avenida Central 456, Ciudad B",
+      "correo_electronico": "ana@example.com",
+      "numero_telefono": "987-654-3210"
+    },
+    {
+      "id_cliente": 3,
+      "nombre_cliente": "Carlos Rodríguez",
+      "direccion_envio": "Plaza Principal 789, Ciudad C",
+      "correo_electronico": "carlos@example.com",
+      "numero_telefono": "456-789-0123"
+    },
+    {
+      "id_cliente": 4,
+      "nombre_cliente": "Laura Martínez",
+      "direccion_envio": "Calle Comercial 234, Ciudad A",
+      "correo_electronico": "laura@example.com",
+      "numero_telefono": "789-012-3456"
+    },
+    {
+      "id_cliente": 5,
+      "nombre_cliente": "Miguel López",
+      "direccion_envio": "Avenida Principal 567, Ciudad B",
+      "correo_electronico": "miguel@example.com",
+      "numero_telefono": "012-345-6789"
+    }
+  ]
