@@ -18,9 +18,9 @@ if codigousuario == 200:
     
     cliente= {
       "nombre_cliente": "Anitaa",
-      "direccion_envio": "Av Central 456, Ciudad B",
+      "direccion_envio": "Av Central , Ciudad Malaga",
       "correo_electronico": "ana@example.com",
-      "numero_telefono": "987-654-3210"
+      "numero_telefono": "987-654-1210"
     }
     
     respuestaCliente=requests.put(url_cliente, json=cliente,headers=cabecera)

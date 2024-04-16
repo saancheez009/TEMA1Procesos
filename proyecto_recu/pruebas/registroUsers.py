@@ -1,7 +1,7 @@
 import requests
 url="http://localhost:5051/users"
 
-usuario = { "username": "Ana",
+usuario = { "username": "Ane",
         "password": "anita"}
 
 response = requests.post(url, json=usuario)
