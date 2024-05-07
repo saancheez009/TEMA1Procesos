@@ -1,5 +1,6 @@
-
+import ficheros
 import json
+
 def leeFichero(rutaFichero):
     try:
         archivo=open(rutaFichero,"r")
@@ -8,15 +9,6 @@ def leeFichero(rutaFichero):
         data=[]
     archivo.close()
     return data
-
-#def leeFichero(rutaFichero):
-  #  try:
- #       archivo=open(rutaFichero,"r")
- #       data = json.load(archivo) #coge datos de un archivo que esta en modo json
- #   except json.JSONDecodeError:
-  #      data=[]
- #   archivo.close()
-  #  return data
 
 def escribeFichero(lista,rutaFichero):
     archivo = open(rutaFichero, "w")
