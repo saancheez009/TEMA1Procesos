@@ -1,0 +1,74 @@
+import multiprocessing
+import os
+from datetime import datetime
+
+# Proceso 1: Filtrar alumnos según la edad
+def proceso_1(edad, cola_1):
+    año_actual = datetime.now().year
+    print(f"[Proceso 1] Año actual: {año_actual}")
+    try:
+        with open('Tema2Pt2/nombres.txt', 'r') as f:
+            for linea in f:
+                linea = linea.strip()
+                nombre_completo, año_nacimiento = linea.rsplit(' -', 1)
+                año_nacimiento = int(año_nacimiento)
+                edad_alumno = año_actual - año_nacimiento
+                print(f"[Proceso 1] Procesando: {nombre_completo}, {edad_alumno} años")
+                if edad_alumno > edad:
+                    print(f"[Proceso 1] Enviando a la cola: {linea}")
+                    cola_1.put(linea)
+        cola_1.put(None)  # Indicar que ya no hay más alumnos
+    except FileNotFoundError:
+        print("[Proceso 1] El fichero PSEP.txt no existe.")
+    except Exception as e:
+        print(f"[Proceso 1] Ocurrió un error: {e}")
+
+# Proceso 2: Extraer nombres y apellidos
+def proceso_2(cola_1, cola_2):
+    while True:
+        linea = cola_1.get()
+        if linea is None:
+            cola_2.put(None)
+            break
+        nombre_completo, _ = linea.rsplit(' -', 1)
+        print(f"[Proceso 2] Enviando a la segunda cola: {nombre_completo}")
+        cola_2.put(nombre_completo)
+
+# Proceso 3: Escribir en fichero
+def proceso_3(cola_2):
+    with open('alumnado.txt', 'w') as f:
+        while True:
+            linea = cola_2.get()
+            if linea is None:
+                break
+            nombre_completo = linea.strip()
+            print(f"[Proceso 3] Escribiendo en el archivo: {nombre_completo}")
+            f.write(nombre_completo + '\n')
+
+# Main
+def main():
+    try:
+        edad = int(input("Introduce una edad: "))
+    except ValueError:
+        print("Por favor, introduce un número válido.")
+        return
+
+    cola_1 = multiprocessing.Queue()
+    cola_2 = multiprocessing.Queue()
+
+    p1 = multiprocessing.Process(target=proceso_1, args=(edad, cola_1))
+    p2 = multiprocessing.Process(target=proceso_2, args=(cola_1, cola_2))
+    p3 = multiprocessing.Process(target=proceso_3, args=(cola_2,))
+
+    p1.start()
+    p2.start()
+    p3.start()
+
+    p1.join()
+    p2.join()
+    p3.join()
+
+    print("El proceso ha finalizado. Revisa el archivo 'alumnado.txt'.")
+
+if __name__ == "__main__":
+    main()
